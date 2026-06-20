@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prueba 3</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="bg-orb orb1"></div>
+<div class="bg-orb orb2"></div>
+<main class="challenge-card">
+    <div class="eyebrow">🔐 Prueba 3</div>
+    <h1>Prueba 3</h1>
+    <p>
+        Aquí irá el contenido de la prueba 3. De momento es una página provisional para comprobar que el sistema funciona.
+    </p>
+    <p>
+        Cuando Inés resuelva esta prueba, escribirá aquí la contraseña. Si acierta, volverá a la página principal y la llave quedará desbloqueada.
+    </p>
+
+    <input id="answer" placeholder="Contraseña de la prueba 3">
+    <button onclick="checkChallenge(3, 'clave3')">Desbloquear llave</button>
+    <div class="feedback" id="feedback"></div>
+
+    <a class="back-link" href="index.html">← Volver a la misión</a>
+</main>
+<script src="challenge.js"></script>
+</body>
+</html>

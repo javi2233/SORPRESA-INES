@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head> 
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Misión: Desbloquear tu regalo</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="bg-orb orb1"></div>
+<div class="bg-orb orb2"></div>
+<div class="bg-orb orb3"></div>
+
+<main class="card">
+    <section class="hero">
+        <div class="eyebrow">✨ Para Inés ✨</div>
+        <h1>🎁 Misión: Desbloquear tu regalo</h1>
+       <p class="subtitle">
+    He preparado algo para ti.
+</p>
+
+<p class="subtitle">
+    No podrás descubrirlo todo de una vez.
+    Tendrás que ir superando cada prueba y conseguir las llaves una a una.
+</p>
+
+<p class="subtitle">
+    Cuando tengas todas, podrás descubrir la sorpresa final que te espera.
+</p>
+        <p class="quote">
+            “Las mejores aventuras empiezan con una primera pista.”
+        </p>
+    </section>
+
+    <section class="countdown-panel">
+        <p class="label">⏳ Cuenta atrás... ⏳</p>
+        <div id="tripCountdown" class="big-countdown"></div>
+        <p class="date-label">10 de julio · 17:00</p>
+    </section>
+
+    <section class="next-box">
+        <strong>🔐 Próxima prueba disponible en:</strong>
+        <div id="nextCountdown" class="small-countdown"></div>
+    </section>
+
+    <section class="progress-wrap">
+        <div class="progress-title">Llaves conseguidas</div>
+        <div class="progress" id="keys"></div>
+        <div id="progressText" class="progress-text"></div>
+    </section>
+
+    <section class="tests" id="tests"></section>
+
+    <section class="final locked" id="finalBox">
+        <h2>🔐 La sorpresa final 🔐</h2>
+        <p id="finalText">Todavía necesitas ${tests.length - solved.length} llaves para descubrir lo que he preparado para ti.</p>
+        <button class="secondary" id="finalButton" onclick="tryReveal()">✨ Descubrir la sorpresa ✨</button>
+
+        <div class="reveal" id="reveal">
+            <h2>Regalo desbloqueado ❤️</h2>
+            <p><strong>Nos vamos a...</strong></p>
+            <p>Prepara la maleta.</p>
+        </div>
+    </section>
+
+    <footer class="footer">
+        Cuando una prueba esté disponible, entra, resuélvela y escribe la contraseña al final de su página.
+    </footer>
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
