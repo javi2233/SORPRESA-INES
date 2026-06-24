@@ -3,28 +3,385 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Prueba 1</title>
+<title>Primera llave</title>
 <link rel="stylesheet" href="style.css">
+<style>
+.escape-room{
+    max-width:900px;
+}
+.escape-intro{
+    color:var(--muted);
+    line-height:1.65;
+    max-width:720px;
+    margin:18px auto 26px;
+}
+.room-panel{
+    margin:22px auto;
+    padding:22px;
+    border-radius:24px;
+    background:linear-gradient(135deg,#fff,#fff7fb);
+    border:1px solid #f5d0fe;
+    box-shadow:0 12px 30px rgba(217,70,239,.10);
+    text-align:left;
+}
+.room-panel h2{
+    margin-top:0;
+    text-align:center;
+}
+.riddle-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:16px;
+    margin-top:18px;
+}
+.riddle-card{
+    padding:18px;
+    border-radius:20px;
+    background:#ffffff;
+    border:1px solid #f1d5f9;
+    box-shadow:0 10px 22px rgba(0,0,0,.06);
+}
+.riddle-card.locked{
+    opacity:.45;
+    filter:grayscale(.4);
+}
+.riddle-card.solved{
+    border-color:#bbf7d0;
+    background:#f0fdf4;
+}
+.riddle-number{
+    display:inline-block;
+    padding:5px 10px;
+    border-radius:999px;
+    background:#fce7f3;
+    color:#9d174d;
+    font-weight:bold;
+    font-size:.82rem;
+    margin-bottom:10px;
+}
+.riddle-text{
+    line-height:1.55;
+    color:#3f3440;
+}
+.letter-board{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    margin:24px 0;
+    flex-wrap:wrap;
+}
+.letter-slot{
+    width:58px;
+    height:58px;
+    border-radius:16px;
+    background:#2b1231;
+    color:#f8d57e;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:1.7rem;
+    font-weight:bold;
+    box-shadow:0 8px 18px rgba(0,0,0,.18);
+}
+.letter-slot.hidden-letter{
+    color:transparent;
+}
+.mission-reveal{
+    display:none;
+    margin-top:24px;
+    padding:24px;
+    border-radius:24px;
+    background:linear-gradient(135deg,#1f1024,#3b1646);
+    color:white;
+    text-align:center;
+    border:1px solid rgba(248,213,126,.55);
+    box-shadow:0 18px 40px rgba(0,0,0,.25);
+}
+.mission-reveal h2{
+    margin-top:0;
+    color:#f8d57e;
+}
+.locker-card{
+    margin:18px auto;
+    max-width:520px;
+    padding:20px;
+    border-radius:18px;
+    background:rgba(255,255,255,.10);
+    border:1px solid rgba(255,255,255,.20);
+}
+.locker-code{
+    font-size:2.3rem;
+    letter-spacing:.18em;
+    color:#f8d57e;
+    font-weight:bold;
+    margin:12px 0;
+}
+.hint{
+    font-size:.9rem;
+    color:var(--muted);
+    margin-top:8px;
+}
+</style>
 </head>
 <body>
 <div class="bg-orb orb1"></div>
 <div class="bg-orb orb2"></div>
-<main class="challenge-card">
-    <div class="eyebrow">🔐 Prueba 1</div>
-    <h1>Prueba 1</h1>
-    <p>
-        Aquí irá el contenido de la prueba 1. De momento es una página provisional para comprobar que el sistema funciona.
-    </p>
-    <p>
-        Cuando Inés resuelva esta prueba, escribirá aquí la contraseña. Si acierta, volverá a la página principal y la llave quedará desbloqueada.
+<div class="bg-orb orb3"></div>
+
+<main class="challenge-card escape-room">
+    <div class="eyebrow">🔐 Primera llave</div>
+    <h1>La habitación cerrada</h1>
+
+    <p class="escape-intro">
+        Bienvenida, Inés. La primera llave no se entrega: se encuentra.
+        Dentro de esta habitación hay cinco pistas. Cada una desbloquea una letra.
+        Cuando descubras la palabra final, sabrás dónde está escondida tu primera recompensa.
     </p>
 
-    <input id="answer" placeholder="Contraseña de la prueba 1">
-    <button onclick="checkChallenge(1, 'clave1')">Desbloquear llave</button>
-    <div class="feedback" id="feedback"></div>
+    <section class="room-panel">
+        <h2>🧩 Panel de pistas</h2>
+
+        <div class="letter-board" id="letters">
+            <div class="letter-slot hidden-letter">K</div>
+            <div class="letter-slot hidden-letter">E</div>
+            <div class="letter-slot hidden-letter">N</div>
+            <div class="letter-slot hidden-letter">I</div>
+            <div class="letter-slot hidden-letter">A</div>
+        </div>
+
+        <div class="riddle-grid">
+            <div class="riddle-card" id="riddle-0">
+                <span class="riddle-number">Pista 1</span>
+                <p class="riddle-text">
+                    Tengo llaves, pero no abro puertas.<br>
+                    Tengo espacio, pero no habitaciones.<br>
+                    Puedes entrar, pero no salir por mí.<br><br>
+                    ¿Qué soy?
+                </p>
+                <input id="answer-0" placeholder="Respuesta">
+                <button onclick="checkRiddle(0)">Comprobar pista</button>
+                <div class="feedback" id="feedback-0"></div>
+                <p class="hint">Pista oculta: piensa también en cómo se dice en inglés.</p>
+            </div>
+
+            <div class="riddle-card locked" id="riddle-1">
+                <span class="riddle-number">Pista 2</span>
+                <p class="riddle-text">
+                    Si me nombras, desaparezco.<br><br>
+                    ¿Qué soy?
+                </p>
+                <input id="answer-1" placeholder="Respuesta" disabled>
+                <button onclick="checkRiddle(1)" disabled>Comprobar pista</button>
+                <div class="feedback" id="feedback-1"></div>
+            </div>
+
+            <div class="riddle-card locked" id="riddle-2">
+                <span class="riddle-number">Pista 3</span>
+                <p class="riddle-text">
+                    Soy impar.<br>
+                    Si me das la vuelta, sigo siendo yo.<br>
+                    Y en inglés empiezo por la letra que buscas.<br><br>
+                    ¿Qué número soy?
+                </p>
+                <input id="answer-2" placeholder="Respuesta" disabled>
+                <button onclick="checkRiddle(2)" disabled>Comprobar pista</button>
+                <div class="feedback" id="feedback-2"></div>
+            </div>
+
+            <div class="riddle-card locked" id="riddle-3">
+                <span class="riddle-number">Pista 4</span>
+                <p class="riddle-text">
+                    Soy frío, puedo romperme,<br>
+                    y en inglés solo necesito tres letras.<br><br>
+                    ¿Qué soy?
+                </p>
+                <input id="answer-3" placeholder="Respuesta" disabled>
+                <button onclick="checkRiddle(3)" disabled>Comprobar pista</button>
+                <div class="feedback" id="feedback-3"></div>
+            </div>
+
+            <div class="riddle-card locked" id="riddle-4">
+                <span class="riddle-number">Pista 5</span>
+                <p class="riddle-text">
+                    No se ve, pero se demuestra.<br>
+                    No pesa, pero importa.<br>
+                    No se compra, pero hoy mueve toda esta misión.<br><br>
+                    ¿Qué es?
+                </p>
+                <input id="answer-4" placeholder="Respuesta" disabled>
+                <button onclick="checkRiddle(4)" disabled>Comprobar pista</button>
+                <div class="feedback" id="feedback-4"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="room-panel" id="finalPanel" style="display:none;">
+        <h2>🔎 Palabra final</h2>
+        <p class="riddle-text" style="text-align:center;">
+            Has recuperado las cinco letras. Ahora escribe la palabra que forman.
+        </p>
+        <input id="finalWord" placeholder="Palabra final">
+        <button onclick="checkFinalWord()">Abrir la puerta</button>
+        <div class="feedback" id="finalFeedback"></div>
+    </section>
+
+    <section class="mission-reveal" id="missionReveal">
+        <h2>🔓 Misión completada</h2>
+        <p>Has encontrado el lugar donde está escondida tu primera recompensa.</p>
+
+        <div class="locker-card">
+            <p><strong>📦 Amazon Locker</strong></p>
+            <h2>KENIA</h2>
+            <p>ES Aragón Zoilo Ríos</p>
+            <p>Villarrapa</p>
+            <p>Código de recogida:</p>
+            <div class="locker-code">394685</div>
+        </div>
+
+        <p>
+            Lo que encontrarás allí es tu primera recompensa.
+            Guárdalo bien: esta aventura acaba de empezar ❤️
+        </p>
+
+        <button onclick="completeFirstKey()">🗝️ He conseguido la primera llave</button>
+        <div class="feedback" id="completeFeedback"></div>
+    </section>
 
     <a class="back-link" href="index.html">← Volver a la misión</a>
 </main>
-<script src="challenge.js"></script>
+
+<script>
+const riddles = [
+    {
+        answers:["teclado"],
+        letter:"K",
+        message:"Correcto. En inglés, teclado es KEYBOARD. Has encontrado la K."
+    },
+    {
+        answers:["silencio"],
+        letter:"E",
+        message:"Correcto. En inglés, silencio es SILENCE. La última letra es E."
+    },
+    {
+        answers:["9","nueve"],
+        letter:"N",
+        message:"Correcto. En inglés, nueve es NINE. Has encontrado la N."
+    },
+    {
+        answers:["hielo"],
+        letter:"I",
+        message:"Correcto. En inglés, hielo es ICE. Has encontrado la I."
+    },
+    {
+        answers:["amor","el amor"],
+        letter:"A",
+        message:"Correcto. La primera letra de AMOR es A."
+    }
+];
+
+function normalizeText(text){
+    return text
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g,"")
+        .trim();
+}
+
+function getSolvedRiddles(){
+    return JSON.parse(localStorage.getItem("prueba1Riddles") || "[]");
+}
+
+function setSolvedRiddles(arr){
+    localStorage.setItem("prueba1Riddles", JSON.stringify(arr));
+}
+
+function getSolved(){
+    return JSON.parse(localStorage.getItem("solvedTests") || "[]");
+}
+
+function setSolved(arr){
+    localStorage.setItem("solvedTests", JSON.stringify(arr));
+}
+
+function checkRiddle(index){
+    const input = document.getElementById(`answer-${index}`);
+    const feedback = document.getElementById(`feedback-${index}`);
+    const value = normalizeText(input.value);
+
+    const correct = riddles[index].answers.some(answer => normalizeText(answer) === value);
+
+    if(correct){
+        const solved = getSolvedRiddles();
+        if(!solved.includes(index)) solved.push(index);
+        setSolvedRiddles(solved);
+
+        feedback.innerHTML = `<span class="ok">${riddles[index].message}</span>`;
+        setTimeout(renderState, 600);
+    } else {
+        feedback.innerHTML = `<span class="error">No es esa... vuelve a pensar ❤️</span>`;
+    }
+}
+
+function renderState(){
+    const solved = getSolvedRiddles();
+    const slots = document.querySelectorAll(".letter-slot");
+
+    riddles.forEach((riddle,index)=>{
+        const card = document.getElementById(`riddle-${index}`);
+        const input = document.getElementById(`answer-${index}`);
+        const button = card.querySelector("button");
+
+        const canOpen = index === 0 || solved.includes(index - 1);
+        const isSolved = solved.includes(index);
+
+        card.classList.toggle("locked", !canOpen);
+        card.classList.toggle("solved", isSolved);
+
+        input.disabled = !canOpen || isSolved;
+        button.disabled = !canOpen || isSolved;
+
+        if(isSolved){
+            slots[index].classList.remove("hidden-letter");
+            input.value = riddles[index].answers[0];
+            document.getElementById(`feedback-${index}`).innerHTML =
+                `<span class="ok">${riddles[index].message}</span>`;
+        }
+    });
+
+    if(solved.length === riddles.length){
+        document.getElementById("finalPanel").style.display = "block";
+    }
+}
+
+function checkFinalWord(){
+    const finalWord = normalizeText(document.getElementById("finalWord").value);
+    const feedback = document.getElementById("finalFeedback");
+
+    if(finalWord === "kenia"){
+        feedback.innerHTML = `<span class="ok">Puerta abierta. Ubicación descubierta.</span>`;
+        document.getElementById("missionReveal").style.display = "block";
+        setTimeout(()=>{
+            document.getElementById("missionReveal").scrollIntoView({behavior:"smooth"});
+        },300);
+    } else {
+        feedback.innerHTML = `<span class="error">Todavía no encaja... mira bien las letras.</span>`;
+    }
+}
+
+function completeFirstKey(){
+    const solved = getSolved();
+    if(!solved.includes(0)) solved.push(0);
+    setSolved(solved);
+
+    document.getElementById("completeFeedback").innerHTML =
+        `<span class="ok">Primera llave conseguida. Volviendo a la misión...</span>`;
+
+    setTimeout(()=>{
+        window.location.href = "index.html";
+    },1400);
+}
+
+renderState();
+</script>
 </body>
 </html>
