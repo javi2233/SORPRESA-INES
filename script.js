@@ -5,7 +5,7 @@ const tripDate = new Date("2026-07-10T17:00:00");
 
 const tests = [
     { title:"Primera llave", unlockDate:new Date("2026-06-24T00:00:00"), page:"prueba1.html" },
-    { title:"Segunda llave", unlockDate:new Date("2026-06-27T20:00:00"), page:"prueba2.html" },
+    { title:"Segunda llave", unlockDate:new Date("2026-06-27T10:00:00"), page:"prueba2.html" },
     { title:"Tercera llave", unlockDate:new Date("2026-07-01T20:00:00"), page:"prueba3.html" },
     { title:"Cuarta llave", unlockDate:new Date("2026-07-04T20:00:00"), page:"prueba4.html" },
     { title:"Quinta llave", unlockDate:new Date("2026-07-08T20:00:00"), page:"prueba5.html" },
