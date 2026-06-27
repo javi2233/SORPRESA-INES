@@ -3,28 +3,246 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Prueba 2</title>
+<title>Segunda llave</title>
 <link rel="stylesheet" href="style.css">
+<style>
+.escape-room{max-width:900px;}
+.escape-intro{color:var(--muted);line-height:1.65;max-width:720px;margin:18px auto 26px;}
+.room-panel{margin:22px auto;padding:22px;border-radius:24px;background:linear-gradient(135deg,#fff,#fff8f1);border:1px solid #fed7aa;box-shadow:0 12px 30px rgba(245,158,11,.12);text-align:left;}
+.room-panel h2{margin-top:0;text-align:center;}
+.fossil-board{display:flex;justify-content:center;gap:10px;margin:24px 0;flex-wrap:wrap;}
+.fossil-slot{width:58px;height:58px;border-radius:16px;background:#3b2a1f;color:#f8d57e;display:flex;align-items:center;justify-content:center;font-size:1.7rem;font-weight:bold;box-shadow:0 8px 18px rgba(0,0,0,.18);}
+.hidden-letter{color:transparent;}
+.riddle-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:18px;}
+.riddle-card{padding:18px;border-radius:20px;background:#ffffff;border:1px solid #fde68a;box-shadow:0 10px 22px rgba(0,0,0,.06);}
+.riddle-card.locked{opacity:.45;filter:grayscale(.4);}
+.riddle-card.solved{border-color:#bbf7d0;background:#f0fdf4;}
+.riddle-number{display:inline-block;padding:5px 10px;border-radius:999px;background:#fff7ed;color:#9a3412;font-weight:bold;font-size:.82rem;margin-bottom:10px;}
+.riddle-text{line-height:1.55;color:#3f3440;}
+.dino-reveal{display:none;margin-top:24px;padding:24px;border-radius:24px;background:linear-gradient(135deg,#231407,#4a2c13);color:white;text-align:center;border:1px solid rgba(248,213,126,.55);box-shadow:0 18px 40px rgba(0,0,0,.25);}
+.dino-reveal h2{margin-top:0;color:#f8d57e;}
+.locker-card{margin:18px auto;max-width:520px;padding:20px;border-radius:18px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.20);}
+.locker-code{font-size:1.7rem;color:#f8d57e;font-weight:bold;margin:12px 0;}
+</style>
 </head>
 <body>
 <div class="bg-orb orb1"></div>
 <div class="bg-orb orb2"></div>
-<main class="challenge-card">
-    <div class="eyebrow">🔐 Prueba 2</div>
-    <h1>Prueba 2</h1>
-    <p>
-        Aquí irá el contenido de la prueba 2. De momento es una página provisional para comprobar que el sistema funciona.
-    </p>
-    <p>
-        Cuando Inés resuelva esta prueba, escribirá aquí la contraseña. Si acierta, volverá a la página principal y la llave quedará desbloqueada.
+<div class="bg-orb orb3"></div>
+
+<main class="challenge-card escape-room">
+    <div class="eyebrow">🦖 Segunda llave</div>
+    <h1>El fósil perdido de Dinópolis</h1>
+
+    <p class="escape-intro">
+        Inés, acabamos de volver de Teruel, pero parece que algo se quedó enterrado allí.
+        Para encontrar la segunda llave tendrás que excavar entre pistas, huellas y criaturas antiguas.
+        Cada acertijo te dará una letra. Cuando las tengas todas, descubrirás la palabra que abre esta sala.
     </p>
 
-    <input id="answer" placeholder="Contraseña de la prueba 2">
-    <button onclick="checkChallenge(2, 'clave2')">Desbloquear llave</button>
-    <div class="feedback" id="feedback"></div>
+    <section class="room-panel">
+        <h2>🦴 Mesa de excavación</h2>
+
+        <div class="fossil-board" id="letters">
+            <div class="fossil-slot hidden-letter">F</div>
+            <div class="fossil-slot hidden-letter">O</div>
+            <div class="fossil-slot hidden-letter">S</div>
+            <div class="fossil-slot hidden-letter">I</div>
+            <div class="fossil-slot hidden-letter">L</div>
+        </div>
+
+        <div class="riddle-grid">
+            <div class="riddle-card" id="riddle-0">
+                <span class="riddle-number">Excavación 1</span>
+                <p class="riddle-text">
+                    No estoy vivo,<br>
+                    pero fui parte de algo que sí lo estuvo.<br>
+                    El tiempo me enterró,<br>
+                    y la tierra me convirtió en una pista.<br><br>
+                    ¿Qué soy?
+                </p>
+                <input id="answer-0" placeholder="Respuesta">
+                <button onclick="checkRiddle(0)">Comprobar excavación</button>
+                <div class="feedback" id="feedback-0"></div>
+            </div>
+
+            <div class="riddle-card locked" id="riddle-1">
+                <span class="riddle-number">Excavación 2</span>
+                <p class="riddle-text">
+                    Puedo parecer una piedra,<br>
+                    pero dentro pude guardar<br>
+                    el principio de una vida prehistórica.<br><br>
+                    ¿Qué soy?
+                </p>
+                <input id="answer-1" placeholder="Respuesta" disabled>
+                <button onclick="checkRiddle(1)" disabled>Comprobar excavación</button>
+                <div class="feedback" id="feedback-1"></div>
+            </div>
+
+            <div class="riddle-card locked" id="riddle-2">
+                <span class="riddle-number">Excavación 3</span>
+                <p class="riddle-text">
+                    La palabra dinosaurio viene de una idea:<br>
+                    “lagarto terrible”.<br><br>
+                    Si “dino” significa terrible,<br>
+                    ¿qué parte significa lagarto?
+                </p>
+                <input id="answer-2" placeholder="Respuesta" disabled>
+                <button onclick="checkRiddle(2)" disabled>Comprobar excavación</button>
+                <div class="feedback" id="feedback-2"></div>
+            </div>
+
+            <div class="riddle-card locked" id="riddle-3">
+                <span class="riddle-number">Excavación 4</span>
+                <p class="riddle-text">
+                    No es un hueso.<br>
+                    No es un diente.<br>
+                    No es un huevo.<br><br>
+                    Es una huella fósil.<br>
+                    ¿Cómo se llama?
+                </p>
+                <input id="answer-3" placeholder="Respuesta" disabled>
+                <button onclick="checkRiddle(3)" disabled>Comprobar excavación</button>
+                <div class="feedback" id="feedback-3"></div>
+            </div>
+
+            <div class="riddle-card locked" id="riddle-4">
+                <span class="riddle-number">Excavación 5</span>
+                <p class="riddle-text">
+                    Antes de decir “dinosaurio”,<br>
+                    podrías imaginarlo de forma antigua:<br>
+                    un gran _______.<br><br>
+                    La palabra empieza por la última letra que buscas.
+                </p>
+                <input id="answer-4" placeholder="Respuesta" disabled>
+                <button onclick="checkRiddle(4)" disabled>Comprobar excavación</button>
+                <div class="feedback" id="feedback-4"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="room-panel" id="finalPanel" style="display:none;">
+        <h2>🔎 Palabra final</h2>
+        <p class="riddle-text" style="text-align:center;">
+            Has encontrado cinco fragmentos enterrados. Escríbelos juntos para abrir la sala.
+        </p>
+        <input id="finalWord" placeholder="Palabra final">
+        <button onclick="checkFinalWord()">Abrir la vitrina</button>
+        <div class="feedback" id="finalFeedback"></div>
+    </section>
+
+    <section class="dino-reveal" id="missionReveal">
+        <h2>🔓 Segunda llave conseguida</h2>
+        <p>
+            Has reconstruido el fósil perdido. La siguiente recompensa no está en Dinópolis,
+            pero te espera en el mundo real.
+        </p>
+
+        <div class="locker-card">
+            <p><strong>📦 Amazon Locker</strong></p>
+            <h2>Segunda recompensa</h2>
+            <p>Código de recogida:</p>
+            <div class="locker-code">Pregunta a Javi</div>
+        </div>
+
+        <p>
+            Guarda esta pista. Cada llave te acerca un poco más a la sorpresa final ❤️
+        </p>
+
+        <button onclick="completeSecondKey()">🗝️ He conseguido la segunda llave</button>
+        <div class="feedback" id="completeFeedback"></div>
+    </section>
 
     <a class="back-link" href="index.html">← Volver a la misión</a>
 </main>
-<script src="challenge.js"></script>
+
+<script>
+const riddles = [
+    {answers:["fosil","fósil"], message:"Correcto. La primera letra del hallazgo es F."},
+    {answers:["huevo","huevo fosil","huevo fósil"], message:"Correcto. La última letra de HUEVO es O."},
+    {answers:["saurio"], message:"Correcto. SAURIO empieza por S."},
+    {answers:["icnita","huella fosil","huella fósil"], message:"Correcto. ICNITA empieza por I."},
+    {answers:["lagarto"], message:"Correcto. LAGARTO empieza por L."}
+];
+
+function normalizeText(text){
+    return text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").trim();
+}
+function getSolvedRiddles(){return JSON.parse(localStorage.getItem("prueba2Riddles") || "[]");}
+function setSolvedRiddles(arr){localStorage.setItem("prueba2Riddles", JSON.stringify(arr));}
+function getSolved(){return JSON.parse(localStorage.getItem("solvedTests") || "[]");}
+function setSolved(arr){localStorage.setItem("solvedTests", JSON.stringify(arr));}
+
+function checkRiddle(index){
+    const input = document.getElementById(`answer-${index}`);
+    const feedback = document.getElementById(`feedback-${index}`);
+    const value = normalizeText(input.value);
+    const correct = riddles[index].answers.some(answer => normalizeText(answer) === value);
+
+    if(correct){
+        const solved = getSolvedRiddles();
+        if(!solved.includes(index)) solved.push(index);
+        setSolvedRiddles(solved);
+        feedback.innerHTML = `<span class="ok">${riddles[index].message}</span>`;
+        setTimeout(renderState, 600);
+    } else {
+        feedback.innerHTML = `<span class="error">No es esa... sigue excavando ❤️</span>`;
+    }
+}
+
+function renderState(){
+    const solved = getSolvedRiddles();
+    const slots = document.querySelectorAll(".fossil-slot");
+
+    riddles.forEach((riddle,index)=>{
+        const card = document.getElementById(`riddle-${index}`);
+        const input = document.getElementById(`answer-${index}`);
+        const button = card.querySelector("button");
+
+        const canOpen = index === 0 || solved.includes(index - 1);
+        const isSolved = solved.includes(index);
+
+        card.classList.toggle("locked", !canOpen);
+        card.classList.toggle("solved", isSolved);
+        input.disabled = !canOpen || isSolved;
+        button.disabled = !canOpen || isSolved;
+
+        if(isSolved){
+            slots[index].classList.remove("hidden-letter");
+            input.value = riddle.answers[0];
+            document.getElementById(`feedback-${index}`).innerHTML =
+                `<span class="ok">${riddle.message}</span>`;
+        }
+    });
+
+    if(solved.length === riddles.length){
+        document.getElementById("finalPanel").style.display = "block";
+    }
+}
+
+function checkFinalWord(){
+    const finalWord = normalizeText(document.getElementById("finalWord").value);
+    const feedback = document.getElementById("finalFeedback");
+
+    if(finalWord === "fosil"){
+        feedback.innerHTML = `<span class="ok">Vitrina abierta. Fósil reconstruido.</span>`;
+        document.getElementById("missionReveal").style.display = "block";
+        setTimeout(()=>{document.getElementById("missionReveal").scrollIntoView({behavior:"smooth"});},300);
+    } else {
+        feedback.innerHTML = `<span class="error">Todavía no encaja... revisa las letras encontradas.</span>`;
+    }
+}
+
+function completeSecondKey(){
+    const solved = getSolved();
+    if(!solved.includes(1)) solved.push(1);
+    setSolved(solved);
+    document.getElementById("completeFeedback").innerHTML =
+        `<span class="ok">Segunda llave conseguida. Volviendo a la misión...</span>`;
+    setTimeout(()=>{window.location.href = "index.html";},1400);
+}
+
+renderState();
+</script>
 </body>
 </html>
