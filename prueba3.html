@@ -3,28 +3,140 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Prueba 3</title>
+<title>Tercera llave</title>
 <link rel="stylesheet" href="style.css">
+<style>
+.safe-room{max-width:920px}
+.safe-intro{color:var(--muted);line-height:1.65;max-width:740px;margin:18px auto 26px}
+.safe-panel{margin:22px auto;padding:24px;border-radius:24px;background:linear-gradient(135deg,#fff,#f8f7ff);border:1px solid #ddd6fe;box-shadow:0 12px 30px rgba(124,58,237,.12);text-align:center}
+.safe-box{max-width:380px;margin:22px auto;padding:28px 20px;border-radius:28px;background:linear-gradient(145deg,#2d2636,#14111a);color:white;border:1px solid rgba(248,213,126,.45);box-shadow:0 24px 55px rgba(0,0,0,.28)}
+.safe-door{width:180px;height:180px;margin:0 auto 20px;border-radius:50%;background:radial-gradient(circle,#5b5268,#201a29 65%);border:12px solid #3c3447;display:flex;align-items:center;justify-content:center;font-size:3rem;box-shadow:inset 0 0 30px rgba(0,0,0,.55),0 12px 28px rgba(0,0,0,.35)}
+.safe-digits{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:18px 0}
+.safe-digits input{text-align:center;font-size:1.8rem;font-weight:bold;padding:12px 6px}
+.clue-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:20px;text-align:left}
+.clue-card{padding:16px;border-radius:18px;background:#ffffff;border:1px solid #e9d5ff;box-shadow:0 10px 22px rgba(0,0,0,.06)}
+.clue-number{display:inline-block;padding:5px 10px;border-radius:999px;background:#f3e8ff;color:#6b21a8;font-weight:bold;font-size:.82rem;margin-bottom:10px}
+.riddle-text{line-height:1.55;color:#3f3440}
+.fragment-section{display:none;margin-top:24px;padding:24px;border-radius:24px;background:linear-gradient(135deg,#1b1530,#34214a);color:white;text-align:center;border:1px solid rgba(248,213,126,.55);box-shadow:0 18px 40px rgba(0,0,0,.25)}
+.fragment-section h2{color:#f8d57e;margin-top:0}
+.photo-grid{width:min(100%,620px);aspect-ratio:3/2;margin:22px auto;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr);gap:6px;padding:6px;border-radius:18px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22)}
+.photo-piece{border-radius:12px;overflow:hidden;background:#111827;position:relative}
+.photo-piece.revealed{background-image:url("valencia.jpg");background-size:300% 200%}
+.photo-piece.locked::after{content:"?";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#f8d57e;font-size:2.5rem;font-weight:bold;background:linear-gradient(135deg,#111827,#2d1b45)}
+.piece-1{background-position:0% 0%}.piece-2{background-position:50% 0%}.piece-3{background-position:100% 0%}.piece-4{background-position:0% 100%}.piece-5{background-position:50% 100%}.piece-6{background-position:100% 100%}
+.achievement{margin:18px auto;max-width:520px;padding:18px;border-radius:18px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.20)}
+</style>
 </head>
 <body>
 <div class="bg-orb orb1"></div>
 <div class="bg-orb orb2"></div>
-<main class="challenge-card">
-    <div class="eyebrow">🔐 Prueba 3</div>
-    <h1>Prueba 3</h1>
-    <p>
-        Aquí irá el contenido de la prueba 3. De momento es una página provisional para comprobar que el sistema funciona.
-    </p>
-    <p>
-        Cuando Inés resuelva esta prueba, escribirá aquí la contraseña. Si acierta, volverá a la página principal y la llave quedará desbloqueada.
+<div class="bg-orb orb3"></div>
+
+<main class="challenge-card safe-room">
+    <div class="eyebrow">🔐 Tercera llave</div>
+    <h1>La caja fuerte</h1>
+
+    <p class="safe-intro">
+        Inés, has llegado a una caja fuerte cerrada.
+        No hay llave a la vista, solo cuatro pistas.
+        Cada una esconde un número. Si los unes en el orden correcto, la caja se abrirá.
     </p>
 
-    <input id="answer" placeholder="Contraseña de la prueba 3">
-    <button onclick="checkChallenge(3, 'clave3')">Desbloquear llave</button>
-    <div class="feedback" id="feedback"></div>
+    <section class="safe-panel">
+        <h2>🧠 Código de seguridad</h2>
+
+        <div class="safe-box">
+            <div class="safe-door" id="safeDoor">🔒</div>
+            <p>Introduce el código de 4 cifras</p>
+            <div class="safe-digits">
+                <input id="d1" maxlength="1" inputmode="numeric">
+                <input id="d2" maxlength="1" inputmode="numeric">
+                <input id="d3" maxlength="1" inputmode="numeric">
+                <input id="d4" maxlength="1" inputmode="numeric">
+            </div>
+            <button onclick="checkSafe()">Abrir caja fuerte</button>
+            <div class="feedback" id="safeFeedback"></div>
+        </div>
+
+        <div class="clue-grid">
+            <div class="clue-card">
+                <span class="clue-number">Cifra 1</span>
+                <p class="riddle-text">Soy el número de patas que tiene una silla normal, pero también el número de paredes que suelen encerrar una habitación.</p>
+            </div>
+            <div class="clue-card">
+                <span class="clue-number">Cifra 2</span>
+                <p class="riddle-text">Si tienes dos llaves y encuentras otra, pero pierdes una por el camino, ¿cuántas llaves te quedan?</p>
+            </div>
+            <div class="clue-card">
+                <span class="clue-number">Cifra 3</span>
+                <p class="riddle-text">Es el número que parece un infinito de pie, pero si lo tumbas, parece que nunca termina.</p>
+            </div>
+            <div class="clue-card">
+                <span class="clue-number">Cifra 4</span>
+                <p class="riddle-text">Una pareja, duplicada. Dos y dos, pero escrito como una sola cifra.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="fragment-section" id="fragmentSection">
+        <h2>🔓 Caja fuerte abierta</h2>
+        <p>Dentro no había un regalo físico. Había algo mejor: un fragmento recuperado.</p>
+
+        <div class="photo-grid">
+            <div class="photo-piece revealed piece-1"></div>
+            <div class="photo-piece locked piece-2"></div>
+            <div class="photo-piece locked piece-3"></div>
+            <div class="photo-piece locked piece-4"></div>
+            <div class="photo-piece locked piece-5"></div>
+            <div class="photo-piece locked piece-6"></div>
+        </div>
+
+        <div class="achievement">
+            <h2>📸 Fragmento 1 de 6 recuperado</h2>
+            <p>Todavía no sabes qué representa la imagen. Pero cada llave revelará una pieza más.</p>
+        </div>
+
+        <button onclick="completeThirdKey()">🗝️ He conseguido la tercera llave</button>
+        <div class="feedback" id="completeFeedback"></div>
+    </section>
 
     <a class="back-link" href="index.html">← Volver a la misión</a>
 </main>
-<script src="challenge.js"></script>
+
+<script>
+function getSolved(){return JSON.parse(localStorage.getItem("solvedTests") || "[]")}
+function setSolved(arr){localStorage.setItem("solvedTests", JSON.stringify(arr))}
+
+function checkSafe(){
+    const code = ["d1","d2","d3","d4"].map(id => document.getElementById(id).value.trim()).join("");
+    const feedback = document.getElementById("safeFeedback");
+    if(code === "4284"){
+        document.getElementById("safeDoor").innerHTML = "🔓";
+        feedback.innerHTML = '<span class="ok">Caja fuerte abierta. Contenido recuperado.</span>';
+        document.getElementById("fragmentSection").style.display = "block";
+        localStorage.setItem("photoFragment1","true");
+        setTimeout(()=>{document.getElementById("fragmentSection").scrollIntoView({behavior:"smooth"});},400);
+    } else {
+        feedback.innerHTML = '<span class="error">Código incorrecto. Revisa las pistas ❤️</span>';
+    }
+}
+
+function completeThirdKey(){
+    const solved = getSolved();
+    if(!solved.includes(2)) solved.push(2);
+    setSolved(solved);
+    document.getElementById("completeFeedback").innerHTML =
+        '<span class="ok">Tercera llave conseguida. Volviendo a la misión...</span>';
+    setTimeout(()=>{window.location.href = "index.html";},1400);
+}
+
+["d1","d2","d3","d4"].forEach((id,index,arr)=>{
+    const input = document.getElementById(id);
+    input.addEventListener("input",()=>{
+        input.value = input.value.replace(/[^0-9]/g,"").slice(0,1);
+        if(input.value && arr[index+1]) document.getElementById(arr[index+1]).focus();
+    });
+});
+</script>
 </body>
 </html>
